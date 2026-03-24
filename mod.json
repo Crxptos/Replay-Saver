@@ -1,17 +1,36 @@
 {
-	"geode": "$GEODE_VERSION",
-	"gd": {
-		"win": "2.2081",
-		"android": "2.2081",
-		"mac": "2.2081",
-		"ios": "2.2081"
-	},
-	"id": "$MOD_ID",
-	"name": "$MOD_NAME",
-	"version": "$MOD_VERSION",
-	"developer": "$MOD_DEVELOPER",
-	"description": "$MOD_DESCRIPTION",
-	"dependencies": {
-		"geode.node-ids": ">=v1.20.0"
-	}
+  "geode": "2.0.0",
+  "version": "1.0.0",
+  "id": "crxptos.replay_saver",
+  "name": "Replay Saver",
+  "developer": "crxptos",
+  "description": "Automatically records and saves replays. Supports optional MP4 export after completing a level.",
+  "repository": "https://github.com/Crxptos/replay-saver",
+  "tags": ["utility", "replay", "recording"],
+
+  "dependencies": [
+    {
+      "id": "geode.loader",
+      "version": ">=2.0.0"
+    },
+    {
+      "id": "eclipse.ffmpeg-api",
+      "version": ">=2.0.0"
+    }
+  ],
+
+  "settings": {
+    "auto-export-mp4": {
+      "type": "bool",
+      "name": "Auto Export MP4",
+      "description": "Automatically export replay as MP4 after level completion.",
+      "default": true
+    },
+    "save-replay-data": {
+      "type": "bool",
+      "name": "Save Replay Data",
+      "description": "Save .replay files for playback and ghost mode.",
+      "default": true
+    }
+  }
 }
