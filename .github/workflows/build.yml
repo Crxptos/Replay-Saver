@@ -26,12 +26,12 @@ jobs:
           git clone https://github.com/geode-sdk/geode.git geode-sdk
           echo "GEODE_SDK=$PWD/geode-sdk" >> $GITHUB_ENV
 
-      # 🔥 Install loader binaries (FIXES your error)
       - name: Install Geode binaries
         run: |
           cd geode-sdk
-          python3 setup.py install-binaries
-
+          chmod +x ./bin/geode
+          ./bin/geode sdk install-binaries
+          
       # ⚙️ Configure build
       - name: Configure
         run: |
