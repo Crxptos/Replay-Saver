@@ -1,13 +1,20 @@
 {
-  "geode": "5.3.0",
+  "geode": ">=5.0.0",
   "gd": "2.2081",
-  "version": "1.0.0",
-  "id": "crxptos.replay-saver",
+
+  "id": "crxptos.replay_saver",
   "name": "Replay Saver",
+  "version": "1.0.1",
   "developer": "crxptos",
-  "description": "Automatically records and saves replays. Supports optional MP4 export after completing a level.",
+
+  "description": "Automatically records and saves replays with optional MP4 export.",
   "repository": "https://github.com/Crxptos/replay-saver",
-  "tags": ["utility", "replay", "recording"],
+
+  "tags": [
+    "utility",
+    "replay",
+    "recording"
+  ],
 
   "dependencies": [
     {
@@ -20,13 +27,13 @@
     "auto-export-mp4": {
       "type": "bool",
       "name": "Auto Export MP4",
-      "description": "Automatically export replay as MP4 after level completion.",
+      "description": "Automatically export replay as MP4 after completing a level.",
       "default": true
     },
     "save-replay-data": {
       "type": "bool",
       "name": "Save Replay Data",
-      "description": "Save .replay files for playback and ghost mode.",
+      "description": "Save replay data files.",
       "default": true
     }
   }
