@@ -1,51 +1,39 @@
-#include "ReplaySaver.hpp"
-#include <Geode/Geode.hpp>
+#include "ReplayRecorder.hpp"
 
-#include <fstream>
-#include <filesystem>
-#include <thread>
+static ReplayRecorder* s_instance = nullptr;
 
-using namespace geode::prelude;
+ReplayRecorder* ReplayRecorder::get() {
+    if (!s_instance) s_instance = new ReplayRecorder();
+    return s_instance;
+}
 
-bool ReplaySaver::saveReplay(const ReplayData& data, std::string& outPath) {
-    try {
-        auto base = Mod::get()->getSaveDir();
-        std::filesystem::path folder = base / "savedReplays";
+void ReplayRecorder::start(int levelID) {
+    m_data = ReplayData();
+    m_data.levelID = levelID;
+    m_frame = 0;
+    m_recording = true;
+}
 
-        std::filesystem::create_directories(folder);
+void ReplayRecorder::stop() {
+    m_recording = false;
+}
 
-        std::filesystem::path filePath =
-            folder / ("level_" + std::to_string(data.levelID) + ".replay");
-
-        std::ofstream out(filePath);
-
-        if (!out.is_open()) {
-            log::error("Failed to open replay file!");
-            return false;
-        }
-
-        out << data.levelID << "\n";
-
-        for (const auto& i : data.inputs) {
-            out << i.frame << " "
-                << i.button << " "
-                << i.pressed << "\n";
-        }
-
-        out.close();
-        outPath = filePath.string();
-
-        return true;
-
-    } catch (const std::exception& e) {
-        log::error("Replay save error: {}", e.what());
-        return false;
+void ReplayRecorder::update() {
+    if (m_recording) {
+        m_frame++;
     }
 }
 
-void ReplaySaver::exportMP4(const std::string& inputFolder, const std::string& output) {
-    std::thread([inputFolder, output]() {
-        // 🔧 Replace later with FFmpeg API
-        log::info("Exporting MP4 from {} -> {}", inputFolder, output);
-    }).detach();
+void ReplayRecorder::recordPress(int button) {
+    if (!m_recording) return;
+    m_data.inputs.push_back({ m_frame, button, true });
+}
+
+void ReplayRecorder::recordRelease(int button) {
+    if (!m_recording) return;
+    m_data.inputs.push_back({ m_frame, button, false });
+}
+
+ReplayData& ReplayRecorder::getData() {
+    return m_data;
 }
