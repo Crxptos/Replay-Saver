@@ -11,10 +11,6 @@
 
   "dependencies": [
     {
-      "id": "geode.loader",
-      "version": ">=2.0.0"
-    },
-    {
       "id": "eclipse.ffmpeg-api",
       "version": ">=2.0.0"
     }
