@@ -21,13 +21,12 @@ jobs:
         with:
           target: Android64
 
-      - name: Upload Android Build
+      - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
-          name: ReplaySaver-Android
-          path: build/*.geode
-
-
+         name: ReplaySaver
+         path: build/Replay_Saver.geode
+    
   # 🟦 WINDOWS BUILD
   windows:
     name: Build Windows
