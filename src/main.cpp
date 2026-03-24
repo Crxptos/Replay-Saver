@@ -1,6 +1,6 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/LevelCompleteLayer.hpp>
+#include <Geode/binding/LevelCompleteLayer.hpp>
 
 #include "ReplayRecorder.hpp"
 #include "ReplaySaver.hpp"
