@@ -20,6 +20,9 @@ jobs:
           target: Android64
           combine: false   # IMPORTANT (you already did this 👍)
 
+      - name: Inspect geode
+        run: unzip -l build/*.geode
+
       # 📤 Upload ALL .geode files (fixes your earlier issue)
       - name: Upload Build
         uses: actions/upload-artifact@v4
