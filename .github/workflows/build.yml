@@ -6,49 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  # 🟢 ANDROID BUILD
-  android:
-    name: Build Android
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Mod (Android64)
-        uses: geode-sdk/build-geode-mod@main
-        with:
-          target: Android64
+      - name: Setup Geode
+        run: |
+          git clone https://github.com/geode-sdk/geode.git geode-sdk
+          echo "GEODE_SDK=$PWD/geode-sdk" >> $GITHUB_ENV
 
-      - name: Find .geode file
-        run: find build -name "*.geode"
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y ninja-build cmake
 
-      - name: Find Android binary
-        run: find build -name "*.so"
-          
-      - name: Upload Build
+      - name: Configure
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cmake --build build
+
+      # 🔥 MANUAL PACKAGE (THIS FIXES EVERYTHING)
+      - name: Package mod
+        run: |
+          mkdir -p package/android64
+          cp build/crxptos.replay_saver.android64.so package/android64/
+          cp mod.json package/
+          cd package
+          zip -r ReplaySaver.geode *
+
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: ReplaySaver
-          path: build/**/*.geode
-    
-  # 🟦 WINDOWS BUILD
-  windows:
-    name: Build Windows
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Build Mod (Windows)
-        uses: geode-sdk/build-geode-mod@main
-        with:
-          target: Win64
-
-      - name: Upload Windows Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: ReplaySaver-Windows
-          path: build/*.geode
+          path: package/ReplaySaver.geode
