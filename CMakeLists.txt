@@ -13,8 +13,10 @@ set(SOURCES
     src/ReplaySaver.cpp
 )
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+# 🔥 IMPORTANT: name must match mod ID format
+add_library(replay_saver SHARED ${SOURCES})
 
-setup_geode_mod(${PROJECT_NAME}
-    ID crxptos.replay-saver
+# 🔥 THIS is the key fix
+setup_geode_mod(replay_saver
+    ID crxptos.replay_saver
 )
