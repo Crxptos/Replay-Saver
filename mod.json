@@ -2,7 +2,7 @@
   "geode": "5.3.0",
   "gd": "2.2081",
   "version": "1.0.0",
-  "id": "crxptos.replay_saver",
+  "id": "crxptos.replay-saver",
   "name": "Replay Saver",
   "developer": "crxptos",
   "description": "Automatically records and saves replays. Supports optional MP4 export after completing a level.",
