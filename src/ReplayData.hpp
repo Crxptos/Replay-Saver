@@ -1,5 +1,6 @@
 #pragma once
-#include <vector>
+
+#include <vector> // 🔴 REQUIRED
 
 struct ReplayInput {
     int frame;
