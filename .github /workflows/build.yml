@@ -1,0 +1,51 @@
+name: Build Geode Mod
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+jobs:
+
+  # 🟢 ANDROID BUILD
+  android:
+    name: Build Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Mod (Android64)
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          target: Android64
+          combine: true
+
+      - name: Upload Android Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReplaySaver-Android
+          path: build/*.geode
+
+
+  # 🟦 WINDOWS BUILD
+  windows:
+    name: Build Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Mod (Windows)
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          target: Win64
+          combine: true
+
+      - name: Upload Windows Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReplaySaver-Windows
+          path: build/*.geode
