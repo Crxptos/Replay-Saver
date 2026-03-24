@@ -5,7 +5,7 @@ project(Replay_Saver)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Load Geode
+# Load Geode SDK
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_BINARY_DIR}/geode)
 
 # Sources
@@ -15,11 +15,8 @@ set(SOURCES
     src/ReplaySaver.cpp
 )
 
-# 🔥 Create library (name matters!)
-add_library(Replay_Saver SHARED ${SOURCES})
+# 🔥 IMPORTANT: target name MUST match mod id suffix
+add_library(replay_saver SHARED ${SOURCES})
 
-# 🔥 LINK target explicitly (THIS is the fix)
-setup_geode_mod(
-    TARGET Replay_Saver
-    ID crxptos.replay_saver
-)
+# 🔥 Correct syntax for your SDK
+setup_geode_mod(replay_saver)
