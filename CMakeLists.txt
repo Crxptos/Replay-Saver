@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(Replay_Saver)
+# ⚠️ IMPORTANT: name must match your mod id style (dash)
+project(crxptos.replay-saver)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ✅ Load Geode SDK
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_BINARY_DIR}/geode)
 
-# ✅ Source files (match your mod)
+# ✅ Your source files
 set(SOURCES
     src/main.cpp
     src/ReplayRecorder.cpp
@@ -18,5 +19,5 @@ set(SOURCES
 # ✅ Build shared library
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
-# ✅ Setup Geode mod
+# ✅ THIS handles EVERYTHING (packaging, android64 folder, etc.)
 setup_geode_mod(${PROJECT_NAME})
