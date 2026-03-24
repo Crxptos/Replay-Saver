@@ -21,9 +21,12 @@ jobs:
         with:
           target: Android64
 
-      - name: List build files
-        run: ls -R build
+      - name: Find .geode file
+        run: find build -name "*.geode"
 
+      - name: Find Android binary
+        run: find build -name "*.so"
+          
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
