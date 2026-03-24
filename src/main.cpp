@@ -8,14 +8,17 @@
 using namespace geode::prelude;
 
 //
-// 🎮 RECORDING SYSTEM
+// 🎮 PLAYLAYER
 //
 class $modify(ReplayPlayLayer, PlayLayer) {
 
     bool init(GJGameLevel* level) {
         if (!PlayLayer::init(level)) return false;
 
-        ReplayRecorder::get()->start(level->m_levelID.value());
+        if (level) {
+            ReplayRecorder::get()->start(level->m_levelID.value());
+        }
+
         return true;
     }
 
@@ -58,9 +61,7 @@ class $modify(ReplayPlayLayer, PlayLayer) {
 
         if (success) {
             notif->setString("Replay saved!");
-
             ReplaySaver::exportMP4("temp", path + ".mp4");
-
         } else {
             notif->setString("Failed to save replay.");
         }
@@ -69,7 +70,7 @@ class $modify(ReplayPlayLayer, PlayLayer) {
 
 
 //
-// 🏁 END SCREEN BUTTON
+// 🏁 LEVEL COMPLETE BUTTON
 //
 class $modify(ReplayEndLayer, LevelCompleteLayer) {
 
@@ -126,9 +127,7 @@ class $modify(ReplayEndLayer, LevelCompleteLayer) {
 
         if (success) {
             notif->setString("Replay saved!");
-
             ReplaySaver::exportMP4("temp", path + ".mp4");
-
         } else {
             notif->setString("Failed to save replay.");
         }
