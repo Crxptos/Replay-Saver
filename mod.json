@@ -2,7 +2,7 @@
   "geode": "5.4.1",
   "gd": "2.2081",
 
-  "id": "crxptos.replay-saver",
+  "id": "crxptos.replay_saver",
   "name": "Replay Saver",
   "version": "1.0.0",
   "developer": "crxptos",
