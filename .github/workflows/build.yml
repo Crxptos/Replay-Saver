@@ -24,8 +24,8 @@ jobs:
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
-         name: ReplaySaver
-         path: build/Replay_Saver.geode
+          name: ReplaySaver
+          path: build/**/*.geode
     
   # 🟦 WINDOWS BUILD
   windows:
