@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ReplayData.hpp"
 
 class ReplayRecorder {
@@ -15,7 +16,7 @@ public:
     ReplayData& getData();
 
 private:
-    ReplayData m_data;
+    ReplayData m_data{};
     int m_frame = 0;
     bool m_recording = false;
 };
