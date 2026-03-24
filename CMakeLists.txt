@@ -20,4 +20,6 @@ set(SOURCES
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 # ✅ THIS handles EVERYTHING (packaging, android64 folder, etc.)
-setup_geode_mod(${PROJECT_NAME})
+setup_geode_mod(${PROJECT_NAME}
+    ID crxptos.replay-saver
+)
