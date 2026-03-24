@@ -10,41 +10,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Get code
+      # 📥 Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🧰 Install tools
+      # 🧰 Install system deps
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y ninja-build cmake python3 zip
+          sudo apt install -y ninja-build cmake python3 python3-pip zip
 
-      # 📦 Clone Geode SDK
+      # 📦 Install Geode CLI (IMPORTANT)
+      - name: Install Geode CLI
+        run: |
+          pip3 install geode-sdk
+
+      # 📦 Clone Geode SDK (headers + cmake)
       - name: Setup Geode SDK
         run: |
           git clone https://github.com/geode-sdk/geode.git geode-sdk
           echo "GEODE_SDK=$PWD/geode-sdk" >> $GITHUB_ENV
 
+      # 🔥 Install loader binaries (FIXES linking error)
       - name: Install Geode binaries
         run: |
-          cd geode-sdk
-          chmod +x ./bin/geode
-          ./bin/geode sdk install-binaries
-          
-      # ⚙️ Configure build
+          geode sdk install-binaries
+
+      # ⚙️ Configure build (Android)
       - name: Configure
         run: |
           cmake -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DGEODE_TARGET_PLATFORM=Android64
 
-      # 🔨 Build mod
+      # 🔨 Build
       - name: Build
         run: |
           cmake --build build
 
-      # 📦 Manual packaging (THIS is the magic fix)
+      # 📦 Manual packaging (THE KEY FIX)
       - name: Package mod
         run: |
           mkdir -p package/android64
@@ -53,7 +57,7 @@ jobs:
           cd package
           zip -r ReplaySaver.geode *
 
-      # 📤 Upload result
+      # 📤 Upload artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
