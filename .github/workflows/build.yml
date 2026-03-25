@@ -38,7 +38,7 @@ jobs:
           cat temp/mod.json
 
           # 🔥 Replace geode version with wildcard
-          sed -i 's/"geode": *"[^"]*"/"geode": "*"/' temp/mod.json
+          sed -i 's/"geode": *"[^"]*"/"geode": "999.0.0"/' temp/mod.json
 
           echo "---- AFTER PATCH ----"
           cat temp/mod.json
