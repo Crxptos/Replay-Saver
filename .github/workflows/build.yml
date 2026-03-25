@@ -1,4 +1,4 @@
-name: Build Replay Saver (FINAL FIXED)
+name: Build Replay Saver (Stable + Nightly)
 
 on:
   push:
@@ -14,20 +14,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔨 Build with real Geode version
+      # 🔨 Build with real Geode version (IMPORTANT)
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           target: Android64
           geode-version: v5.4.1
 
-      # 🔍 Inspect original file (optional debug)
+      # 🔍 Inspect original (optional debug)
       - name: Inspect original geode
         run: |
           echo "---- ORIGINAL CONTENT ----"
           unzip -l build/*.geode
 
-      # 🧠 Patch mod.json (fix nightly outdated)
+      # 🧠 Patch ONLY geode version (keeps settings!)
       - name: Patch mod.json for nightly
         run: |
           rm -rf temp
@@ -37,7 +37,7 @@ jobs:
           echo "---- BEFORE PATCH ----"
           cat temp/mod.json
 
-          # 🔥 set fake high version so it always passes
+          # 🔥 Replace ONLY geode version
           sed -i 's/"geode": *"[^"]*"/"geode": "999.0.0"/' temp/mod.json
 
           echo "---- AFTER PATCH ----"
@@ -55,13 +55,12 @@ jobs:
 
           unzip ../patched.geode
 
-          # ✅ Correct Android folder structure
           mkdir -p android/arm64-v8a
 
           echo "---- BEFORE MOVE ----"
           ls
 
-          # 🔥 Move + rename .so
+          # 🔥 Move + rename .so correctly
           for f in *.android64.so; do
             if [ -f "$f" ]; then
               echo "Moving $f → android/arm64-v8a/crxptos.replay_saver.so"
@@ -72,7 +71,7 @@ jobs:
           echo "---- AFTER MOVE ----"
           ls -R
 
-          # 🚨 Fail if not correct
+          # 🚨 Fail if missing
           if [ ! -f android/arm64-v8a/crxptos.replay_saver.so ]; then
             echo "ERROR: .so not in correct Android path!"
             exit 1
@@ -80,7 +79,13 @@ jobs:
 
           zip -r ReplaySaver.geode *
 
-      # 📤 Upload final working mod
+      # 🔍 Verify final mod.json (IMPORTANT DEBUG)
+      - name: Verify final mod.json
+        run: |
+          echo "---- FINAL MOD.JSON ----"
+          unzip -p fixed/ReplaySaver.geode mod.json
+
+      # 📤 Upload final mod
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
