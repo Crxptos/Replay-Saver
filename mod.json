@@ -1,6 +1,6 @@
 {
   "geode": "*",
-  "gd": "*",
+  "gd": "5.4.1",
 
   "id": "crxptos.replay_saver",
   "name": "Replay Saver",
