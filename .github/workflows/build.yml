@@ -20,7 +20,8 @@ jobs:
         with:
           target: Android64
           geode-version: v5.4.1
-
+          use-mod-json-geode: false
+          
       # 🔍 Inspect original (debug)
       - name: Inspect original geode
         run: |
