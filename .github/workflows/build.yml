@@ -19,7 +19,7 @@ jobs:
         uses: geode-sdk/build-geode-mod@main
         with:
           target: Android64
-          combine: false
+          geode-version: v5.4.1
 
       # 🔍 Inspect original (debug)
       - name: Inspect original geode
