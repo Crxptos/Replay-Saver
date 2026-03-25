@@ -1,4 +1,4 @@
-name: Build Replay Saver (Nightly Compatible)
+name: Build Replay Saver (FINAL FIXED)
 
 on:
   push:
@@ -10,24 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Checkout
+      # 📥 Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔨 Build with REAL version (important)
+      # 🔨 Build with real Geode version
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           target: Android64
           geode-version: v5.4.1
 
-      # 🔍 Debug original
+      # 🔍 Inspect original file (optional debug)
       - name: Inspect original geode
         run: |
           echo "---- ORIGINAL CONTENT ----"
           unzip -l build/*.geode
 
-      # 🧠 PATCH mod.json (THIS FIXES NIGHTLY)
+      # 🧠 Patch mod.json (fix nightly outdated)
       - name: Patch mod.json for nightly
         run: |
           rm -rf temp
@@ -37,7 +37,7 @@ jobs:
           echo "---- BEFORE PATCH ----"
           cat temp/mod.json
 
-          # 🔥 Replace geode version with wildcard
+          # 🔥 set fake high version so it always passes
           sed -i 's/"geode": *"[^"]*"/"geode": "999.0.0"/' temp/mod.json
 
           echo "---- AFTER PATCH ----"
@@ -46,7 +46,7 @@ jobs:
           cd temp
           zip -r ../patched.geode *
 
-      # 🔥 FIX PACKAGING
+      # 🔥 Fix Android structure (CRITICAL)
       - name: Fix and repackage mod
         run: |
           rm -rf fixed
@@ -55,31 +55,32 @@ jobs:
 
           unzip ../patched.geode
 
-          mkdir -p android64
+          # ✅ Correct Android folder structure
+          mkdir -p android/arm64-v8a
 
           echo "---- BEFORE MOVE ----"
           ls
 
-          # 💀 Move .so properly
+          # 🔥 Move + rename .so
           for f in *.android64.so; do
             if [ -f "$f" ]; then
-              echo "Moving $f → android64/"
-              mv "$f" android64/
+              echo "Moving $f → android/arm64-v8a/crxptos.replay_saver.so"
+              mv "$f" android/arm64-v8a/crxptos.replay_saver.so
             fi
           done
 
           echo "---- AFTER MOVE ----"
           ls -R
 
-          # 🚨 Fail if missing
-          if [ ! -f android64/*.android64.so ]; then
-            echo "ERROR: .so not inside android64!"
+          # 🚨 Fail if not correct
+          if [ ! -f android/arm64-v8a/crxptos.replay_saver.so ]; then
+            echo "ERROR: .so not in correct Android path!"
             exit 1
           fi
 
           zip -r ReplaySaver.geode *
 
-      # 📤 Upload final mod
+      # 📤 Upload final working mod
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
