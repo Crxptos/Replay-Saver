@@ -1,5 +1,5 @@
 {
-  "geode": "0.0.0",
+  "geode": "*",
   "gd": "*",
 
   "id": "crxptos.replay_saver",
