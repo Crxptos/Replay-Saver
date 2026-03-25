@@ -7,10 +7,12 @@
   "version": "1.0.0",
   "developer": "Crxptos",
 
-  "description": "Automatically saves replays and exports them as MP4 with customizable settings",
+  "description": "Automatically saves replays and exports them as MP4.",
+
+  "platforms": ["android"],
 
   "links": {
-    "source": "https://github.com/Crxptos/Replay-Saver"
+    "source": "https://github.com/your-username/Replay-Saver"
   },
 
   "resources": {
@@ -30,96 +32,68 @@
     }
   ],
 
-  "settings": [
-    {
+  "settings": {
+    "auto-save": {
       "type": "bool",
-      "key": "auto-save",
       "name": "Auto Save Replay",
       "description": "Automatically saves replay when a level is completed.",
       "default": true
     },
-    {
+    "auto-export": {
       "type": "bool",
-      "key": "auto-export",
       "name": "Auto Export MP4",
-      "description": "Automatically exports the replay as an MP4 file.",
+      "description": "Automatically exports replay as MP4.",
       "default": false
     },
-    {
+    "save-path": {
       "type": "string",
-      "key": "save-path",
       "name": "Save Location",
-      "description": "Folder where replays will be saved.",
+      "description": "Where replays are saved.",
       "default": "geode/mods/crxptos.replay_saver/savedReplays"
     },
-    {
-      "type": "enum",
-      "key": "quality",
-      "name": "Export Quality",
-      "description": "Video resolution for exported replays.",
-      "options": ["480p", "720p", "1080p"],
-      "default": "1080p"
-    },
-    {
+    "fps": {
       "type": "int",
-      "key": "fps",
       "name": "FPS",
       "description": "Frames per second for video export.",
       "default": 60,
       "min": 30,
       "max": 240
     },
-    {
+    "quality": {
+      "type": "string",
+      "name": "Export Quality",
+      "description": "Video quality preset.",
+      "default": "1080p"
+    },
+    "audio": {
       "type": "bool",
-      "key": "audio",
       "name": "Record Audio",
       "description": "Include audio in exported video.",
       "default": true
     },
-    {
-      "type": "enum",
-      "key": "format",
-      "name": "Replay Format",
-      "description": "Choose what to save after completing a level.",
-      "options": ["dat", "mp4", "both"],
-      "default": "both"
-    },
-    {
-      "type": "float",
-      "key": "delay",
-      "name": "Save Delay",
-      "description": "Delay before saving replay (seconds).",
-      "default": 1.0,
-      "min": 0.0,
-      "max": 5.0
-    },
-    {
+    "notifications": {
       "type": "bool",
-      "key": "notifications",
       "name": "Show Notifications",
-      "description": "Display messages when saving replays.",
+      "description": "Show messages when saving replays.",
       "default": true
     },
-    {
+    "manual-button": {
       "type": "bool",
-      "key": "manual-button",
       "name": "Show Save Button",
-      "description": "Adds a 'Save Replay' button to the level complete screen.",
+      "description": "Adds a Save Replay button on level complete screen.",
       "default": true
     },
-    {
+    "ghost": {
       "type": "bool",
-      "key": "ghost",
       "name": "Enable Ghost Replay",
-      "description": "Save data for ghost replay system.",
+      "description": "Saves ghost replay data.",
       "default": false
     },
-    {
+    "debug": {
       "type": "bool",
-      "key": "debug",
       "name": "Debug Mode",
-      "description": "Enable debug logging for troubleshooting.",
+      "description": "Enable debug logging.",
       "default": false
     }
-  ]
+  }
 }
