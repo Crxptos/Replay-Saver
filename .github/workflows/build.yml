@@ -1,4 +1,4 @@
-name: Build Replay Saver (Fixed)
+name: Build Replay Saver (Nightly Compatible)
 
 on:
   push:
@@ -10,39 +10,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Get code
+      # 📥 Checkout
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔨 Build with Geode (this part already works)
+      # 🔨 Build with REAL version (important)
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           target: Android64
           geode-version: v5.4.1
-          use-mod-json-geode: false
-          
-      # 🔍 Inspect original (debug)
+
+      # 🔍 Debug original
       - name: Inspect original geode
         run: |
           echo "---- ORIGINAL CONTENT ----"
           unzip -l build/*.geode
 
-      # 🔥 FIX PACKAGING (FORCE MOVE .so)
+      # 🧠 PATCH mod.json (THIS FIXES NIGHTLY)
+      - name: Patch mod.json for nightly
+        run: |
+          rm -rf temp
+          mkdir temp
+          unzip build/*.geode -d temp
+
+          echo "---- BEFORE PATCH ----"
+          cat temp/mod.json
+
+          # 🔥 Replace geode version with wildcard
+          sed -i 's/"geode": *"[^"]*"/"geode": "*"/' temp/mod.json
+
+          echo "---- AFTER PATCH ----"
+          cat temp/mod.json
+
+          cd temp
+          zip -r ../patched.geode *
+
+      # 🔥 FIX PACKAGING
       - name: Fix and repackage mod
         run: |
           rm -rf fixed
           mkdir fixed
           cd fixed
 
-          unzip ../build/*.geode
+          unzip ../patched.geode
 
           mkdir -p android64
 
           echo "---- BEFORE MOVE ----"
           ls
 
-          # 💀 FORCE move ANY android64 binary
+          # 💀 Move .so properly
           for f in *.android64.so; do
             if [ -f "$f" ]; then
               echo "Moving $f → android64/"
@@ -53,15 +71,15 @@ jobs:
           echo "---- AFTER MOVE ----"
           ls -R
 
-          # 🚨 HARD FAIL if still wrong
-          if [ ! -f "android64/"*.android64.so ]; then
+          # 🚨 Fail if missing
+          if [ ! -f android64/*.android64.so ]; then
             echo "ERROR: .so not inside android64!"
             exit 1
           fi
 
           zip -r ReplaySaver.geode *
 
-      # 📤 Upload fixed mod
+      # 📤 Upload final mod
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
