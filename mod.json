@@ -1,6 +1,6 @@
 {
   "geode": "5.4.1",
-  "gd": "*",
+  "gd": "2.2081",
 
   "id": "crxptos.replay_saver",
   "name": "Replay Saver",
@@ -46,7 +46,7 @@
       "default": false
     },
     "save-path": {
-      "type": "string",
+      "type": "file",
       "name": "Save Location",
       "description": "Where replays are saved.",
       "default": "geode/mods/crxptos.replay_saver/savedReplays"
@@ -60,10 +60,11 @@
       "max": 240
     },
     "quality": {
-      "type": "string",
+      "type": "enum",
       "name": "Export Quality",
       "description": "Video quality preset.",
-      "default": "1080p"
+      "default": "1080p",
+      "options": ["720p", "1080p", "1440p"]
     },
     "audio": {
       "type": "bool",
