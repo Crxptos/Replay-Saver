@@ -5,10 +5,6 @@ project(Replay_Saver)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(GEODE_GD_VERSION_STRING "2.2081")
-
-set(GEODE_GD_VERSION 22081)
-
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_BINARY_DIR}/geode)
 
 set(SOURCES
