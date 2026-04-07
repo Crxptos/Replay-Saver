@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 🔥 MUST BE BEFORE add_subdirectory
-set(GEODE_GD_VERSION 2.2081)
+set(GEODE_GD_VERSION "2.2081")
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_BINARY_DIR}/geode)
 
