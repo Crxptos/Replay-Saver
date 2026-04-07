@@ -17,4 +17,6 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "crxptos.replay_saver")
 
+set(GEODE_GD_VERSION 2.2081)
+
 setup_geode_mod(${PROJECT_NAME})
